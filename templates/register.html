@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{%block title%} Register {% endblock %}
+
+
+{% block content %}
+<body>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <br>
+    <div class="col text-center">
+        <h1>Create your account</h1>
+     </div>
+    <form method="post" class="text-center mt-5">
+        <div class="form-group row justify-content-center" style="font-size: xx-large;">
+            <label for="username" class="col-sm-2 col-form-label">Username:</label>
+            <div class="col-sm-3">
+                <input type="text" class="form-control" id="username" name="username" placeholder="Username" required style="font-size: xx-large;">
+                <div class="valid-feedback">Valid.</div>
+                <div class="invalid-feedback">Please fill out this field.</div>
+            </div>
+        </div>
+        <div class="form-group row justify-content-center" style="font-size: xx-large;">
+            <label for="password" class="col-sm-2 col-form-label">Password:</label>
+            <div class="col-sm-3">
+                <input type="password" class="form-control" id="password" name="password" placeholder="Password" required style="font-size: xx-large;">
+                <div class="valid-feedback">Valid.</div>
+                <div class="invalid-feedback">Please fill out this field.</div>
+            </div>
+        </div>
+        <div class="form-group row justify-content-center" style="font-size: xx-large;">
+            <label for="password" class="col-sm-2 col-form-label">Confirm password:</label>
+            <div class="col-sm-3">
+                <input type="password" class="form-control" id="re_password" name="re_password" placeholder="Password again" required style="font-size: xx-large;">
+                <div class="valid-feedback">Valid.</div>
+                <div class="invalid-feedback">Please fill out this field.</div>
+            </div>
+        </div>
+        <div class="form-group row justify-content-center" style="font-size: xx-large;">
+            <div class="col-sm-6">
+
+            <hr>
+           <br>
+            {% for category, message in get_flashed_messages(with_categories=true) %}
+                <div class="alert alert-{{ category }}" style="color: crimson;">{{ message }}</div>
+            {% endfor %}
+           <button type="submit" class="btn btn-secondary" style="font-size: xx-large;">Register</button>
+        </div>
+    </div>
+
+    </form>
+
+    <script>
+        $(document).ready(function() {
+            setTimeout(function() {
+                $(".alert").fadeTo(500, 0).slideUp(500, function(){
+                    $(this).remove(); 
+                });
+            }, 3000);
+        });
+        </script>
+        
+</body>
+
+</html>
+{% endblock %}
+

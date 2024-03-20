@@ -1,0 +1,23 @@
+
+{% extends 'base.html' %}
+
+{% block content %}
+
+<body>
+
+{% if current_user.is_authenticated and current_user.is_2fa_configured %}        <!-- Kui kasutaja on sisseloginud, tervita teda tema kasutajanimega -->
+<div class="col text-center">
+    <br>
+    <br>
+    <br>
+
+<h1>Tere, {{ current_user.username }}!</h1>
+        <br>
+        <br>
+
+
+</div>
+{% endif %}
+</body>
+</html>
+{% endblock %}

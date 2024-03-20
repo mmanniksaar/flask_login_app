@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+
+{%block title%} Login {% endblock %}
+
+{% block content %}
+<style>
+    /* Määra <main> elemendi kõrgus 100% ekraani kõrgusest */
+    main {
+        height:calc(100vh - 150px);
+        width: 100%; 
+    }
+</style>
+<main>
+    {% if not current_user.is_authenticated %} 
+    <br>
+    <div class="col text-center">
+       <h1>Login</h1>
+    </div>
+        <form method="post" class="text-center mt-5">
+            <div class="form-group row justify-content-center" style="font-size: xx-large;">
+                <label for="username" class="col-sm-2 col-form-label">Username:</label>
+                <div class="col-sm-3">
+                    <input type="text" class="form-control" id="username" name="username" placeholder="Username" required style="font-size: xx-large;">
+                    <div class="valid-feedback">Valid.</div>
+                    <div class="invalid-feedback">Please fill out this field.</div>
+                </div>
+            </div>
+
+            <div class="form-group row justify-content-center" style="font-size: xx-large;">
+                <label for="password" class="col-sm-2 col-form-label">Password:</label>
+                <div class="col-sm-3">
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Password" required style="font-size: xx-large;">
+                    <div class="valid-feedback">Valid.</div>
+                    <div class="invalid-feedback">Please fill out this field.</div>
+                </div>
+            </div>
+
+            <div class="form-group row justify-content-center" style="font-size: xx-large;">
+                <div class="col-sm-6">
+    
+            <hr>
+            <br>
+
+               <button type="submit" class="btn btn-secondary" style="font-size: xx-large;">Login</button>
+            </div>
+        </div>
+    
+        </form>
+    {% else %}
+
+        <div class="container">
+            <br>
+            <div class="row">
+                <div class="col text-center">
+                    <h2>Two-Factor Authentication - Google Authenticator</h2>
+                    <h3>You are registered in our database with the username {{ current_user.username }}.</h3>
+                    <h3>Please identify yourself.</h3>
+                    <p>This is your QR code if your Google Authenticator is not configured with our website.</p>
+                    <p>Scan the code with your Google Authenticator app.</p>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col text-center">
+                    <img src="{{ totp_uri | qrcode }}" alt="2FA QR-kood" style="width:250px; height:250px;">
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col text-center">
+                <h2>or</h2>
+              </div>
+            </div>
+            <div class="row">
+                <div class="col text-center">
+                    <h2>add the code from your Google Authenticator app.</h2>
+                    <form method="POST" action="{{ url_for('setup_and_verify_2fa') }}" >
+                        <input type="text" id="2fa_code" name="2fa_code" required style="font-size:26px;">
+                        <button type="submit" style="font-size:26px;">Confirm the 2FA code.</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    {% endif %}
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
+
+    <script>
+        $(document).ready(function() {
+            setTimeout(function() {
+                $(".alert").fadeTo(500, 0).slideUp(500, function(){
+                    $(this).remove(); 
+                });
+            }, 3000);
+        });
+        </script>
+        
+</main>
+{% endblock %}
+
